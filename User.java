@@ -46,10 +46,7 @@ public class User {
                     compare = sc.next();
                     for (int i = 0; i < flights.size(); i++) {
                         if(compare.equals(flights.get(i).getFlightId()))
-                        {
                             showFlight(i);
-                            break;
-                        }
                     }
                     break;
                 case 2:
@@ -57,10 +54,7 @@ public class User {
                     compare = sc.next();
                     for (int i = 0; i < flights.size(); i++) {
                         if(compare.equals(flights.get(i).getOrigin()))
-                        {
                             showFlight(i);
-                            break;
-                        }
                     }
                     break;
                 case 3:
@@ -68,10 +62,7 @@ public class User {
                     compare = sc.next();
                     for (int i = 0; i < flights.size(); i++) {
                         if(compare.equals(flights.get(i).getDestination()))
-                        {
                             showFlight(i);
-                            break;
-                        }
                     }
                     break;
                 case 4:
@@ -79,10 +70,7 @@ public class User {
                     compare = sc.next();
                     for (int i = 0; i < flights.size(); i++) {
                         if(compare.equals(flights.get(i).getDate()))
-                        {
                             showFlight(i);
-                            break;
-                        }
                     }
                     break;
                 case 5:
@@ -90,10 +78,7 @@ public class User {
                     compare = sc.next();
                     for (int i = 0; i < flights.size(); i++) {
                         if(compare.equals(flights.get(i).getTime()))
-                        {
                             showFlight(i);
-                            break;
-                        }
                     }
                     break;
                 case 6:
@@ -101,10 +86,7 @@ public class User {
                     compareInt = sc.nextInt();
                     for (int i = 0; i < flights.size(); i++) {
                         if(compareInt == flights.get(i).getPrice())
-                        {
                             showFlight(i);
-                            break;
-                        }
                     }
                     break;
                 case 7:
@@ -112,13 +94,11 @@ public class User {
                     compareInt = sc.nextInt();
                     for (int i = 0; i < flights.size(); i++) {
                         if(compareInt == flights.get(i).getSeats())
-                        {
                             showFlight(i);
-                            break;
-                        }
                     }
                     break;
             }
+            sc.nextLine();
             deleteScreen();
             System.out.println("<1>Based on flight id\n<2> Based on origin\n<3> Based on destination\n<4> Based on date\n" +
                     "<5> Based on time\n<6> Based on price\n<7> Based on seats\n<-1> Return\n");
@@ -152,23 +132,20 @@ public class User {
             tmp += ticketId.charAt(i);
             i++;
         }
-        for (int j = 0; j < bookedTicket.size(); j++) {
-            if(bookedTicket.get(j) == ticketId){
-                bookedTicket.remove(j);
-                break;
-            }
-        }
+        bookedTicket.remove(ticketId);
         for (int j = 0; j < flights.size(); j++) {
             if(flights.get(j).getFlightId().equals(tmp)){
                 charge += flights.get(j).getPrice();
+                flights.get(j).setSeats(flights.get(j).getSeats() + 1);
                 break;
             }
         }
     }
     public void bookedTickets(){
-        for (String bT : bookedTicket) {
-            System.out.println(bT);
+        for (int i = 0; i < bookedTicket.size(); i++) {
+            System.out.println(bookedTicket.get(i));
         }
+        sc.nextLine();
     }
     public void addCharge(){
         System.out.println("Your charge is: " + charge + "\nEnter the charge you want to add: ");
@@ -180,6 +157,7 @@ public class User {
         System.out.printf("|%s\t\t\t\t|%s\t\t\t\t|%s\t\t\t\t\t|%s\t\t\t\t|%s\t\t\t\t|%d\t\t\t\t|%d|%n", flights.get(i).getFlightId(), 
                 flights.get(i).getOrigin(), flights.get(i).getDestination(), flights.get(i).getDate(),
                 flights.get(i).getTime(), flights.get(i).getPrice(), flights.get(i).getSeats());
+        sc.nextLine();
     }
     public static void deleteScreen(){
         System.out.print("\033[H\033[2J");

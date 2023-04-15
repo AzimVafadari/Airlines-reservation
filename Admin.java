@@ -66,7 +66,7 @@ public class Admin {
                 break;
         }
         i--;
-        System.out.println("1.Flight id\n2.Origin\n3.Destination\n4.Date\n5.Time\n6.Price\n7.Seats\n-1.Return");
+        System.out.println("<1> Flight id\n<2> Origin\n<3> Destination\n<4> Date\n<5> Time\n<6> Price\n<7> Seats\n<-1> Return\n");
         int command = sc.nextInt();
         while(command != -1){
             switch(command){
@@ -103,7 +103,6 @@ public class Admin {
             System.out.println("<1> Flight id\n<2> Origin\n<3> Destination\n<4> Date\n<5> Time\n<6> Price\n<7> Seats\n<-1> Return\n");
             command = sc.nextInt();
         }
-        return;
     }
     public static void deleteScreen(){
         System.out.print("\033[H\033[2J");
@@ -120,10 +119,13 @@ public class Admin {
         return;
     }
     public void flightSchedule(){
-        System.out.println("|FlightId\t\t\t|Origin\t\t\t\t|Destination\t\t\t|Date\t\t\t\t|Time\t\t\t|Price\t\t\t|Seats|");
+        System.out.println("|FlightId\t\t\t|Origin\t\t\t\t|Destination\t\t\t\t|Date\t\t\t\t|Time\t\t\t\t|Price\t\t\t\t|Seats|");
         for (int i = 0; i < cnt_flight; i++) {
-            System.out.println("................................................................................................");
-            System.out.printf("|%s\t\t\t\t|%s\t\t\t\t|%s\t\t\t\t\t|%s\t\t\t\t|%s\t\t\t\t|%d\t\t\t\t|%d|%n", flights.get(i).getFlightId(), flights.get(i).getOrigin(), flights.get(i).getDestination(), flights.get(i).getDate(), flights.get(i).getTime(), flights.get(i).getPrice(), flights.get(i).getSeats());
+            System.out.println("................................................................................................." +
+                    "......................................................................................................");
+            System.out.printf("|%s\t\t\t\t|%s\t\t\t\t|%s\t\t\t\t\t|%s\t\t\t\t|%s\t\t\t\t|%d\t\t\t\t|%d|%n", flights.get(i).getFlightId(), flights.get(i).getOrigin(),
+                    flights.get(i).getDestination(), flights.get(i).getDate(), flights.get(i).getTime(), flights.get(i).getPrice(), flights.get(i).getSeats());
         }
+        sc.nextLine();
     }
 }
