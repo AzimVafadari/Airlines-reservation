@@ -29,13 +29,19 @@ public class User {
         this.password = password;
     }
     public void changePassword(){
-        System.out.println("Enter your new password: ");
+        System.out.println("\033[38;2;130;255;130mEnter your new password: \033[0m");
         setPassword(sc.next());
         return;
     }
     public void searchFlightsTickets(){
-        System.out.println("<1>Based on flight id\n<2> Based on origin\n<3> Based on destination\n<4> Based on date\n" +
-                "<5> Based on time\n<6> Based on price\n<7> Based on seats\n<-1> Return\n");
+        System.out.println("\033[38;2;255;255;215m<\033[38;2;255;255;0m1\033[38;2;255;255;215m> Based on flight id\n" +
+                "\033[38;2;255;255;215m<\033[38;2;255;255;0m2\033[38;2;255;255;215m> Based on origin\n" +
+                "\033[38;2;255;255;215m<\033[38;2;255;255;0m3\033[38;2;255;255;215m> Based on destination\n" +
+                "\033[38;2;255;255;215m<\033[38;2;255;255;0m4\033[38;2;255;255;215m> Based on date\n" +
+                "\033[38;2;255;255;215m<\033[38;2;255;255;0m5\033[38;2;255;255;215m> Based on time\n" +
+                "\033[38;2;255;255;215m<\033[38;2;255;255;0m6\033[38;2;255;255;215m> Based on price\n" +
+                "\033[38;2;255;255;215m<\033[38;2;255;255;0m7\033[38;2;255;255;215m> Based on seats\n" +
+                "\033[38;2;255;255;215m<\033[38;2;255;255;0m-1\033[38;2;255;255;215m> Return\n");
         int command = sc.nextInt();
         String compare = new String();
         int compareInt;
@@ -108,13 +114,13 @@ public class User {
     }
     public void bookingTicket(){
         String flightId = new String();
-        System.out.println("Enter flight id: ");
+        System.out.println("\033[38;2;130;255;130mEnter flight id: \033[0m");
         flightId = sc.next();
         for (int i = 0; i < flights.size(); i++) {
             if(flightId.equals(flights.get(i).getFlightId())){
-                flights.get(i).setSeats(flights.get(i).getSeats() - 1);
                 flightId += "@";
                 flightId += Integer.toString(flights.get(i).getSeats());
+                flights.get(i).setSeats(flights.get(i).getSeats() - 1);
                 System.out.println(flightId.length());
                 System.out.println(flightId);
                 bookedTicket.add(flightId);
@@ -124,7 +130,7 @@ public class User {
         }
     }
     public void ticketCancellation(){
-        System.out.println("Enter your ticket id: ");
+        System.out.println("\033[38;2;130;255;130mEnter your ticket id: \033[0m");
         String ticketId = sc.next();
         String tmp = new String();
         int i = 0;
@@ -143,18 +149,22 @@ public class User {
     }
     public void bookedTickets(){
         for (int i = 0; i < bookedTicket.size(); i++) {
-            System.out.println(bookedTicket.get(i));
+            System.out.println("\033[38;2;0;0;255m" + bookedTicket.get(i));
         }
         sc.nextLine();
     }
     public void addCharge(){
-        System.out.println("Your charge is: " + charge + "\nEnter the charge you want to add: ");
+        System.out.println("\033[38;2;0;255;0mYour charge is: " + charge + "\nEnter the charge you want to add: \033[0m");
         charge += sc.nextInt();
     }
     public void showFlight(int i){
-        System.out.println("|FlightId\t\t\t|Origin\t\t\t\t|Destination\t\t\t|Date\t\t\t\t|Time\t\t\t|Price\t\t\t|Seats|");
+        System.out.println("\033[38;2;255;255;0m|\033[38;2;130;255;130mFlightId\t\033[38;2;255;255;0m|\033[38;2;130;255;130m" +
+                "Origin\t\033[38;2;255;255;0m|\033[38;2;130;255;130m" +
+                "Destination\t\033[38;2;255;255;0m|\033[38;2;130;255;130mDate\t" +
+                "\033[38;2;255;255;0m|\033[38;2;130;255;130mTime\t\033[38;2;255;255;0m|\033[38;2;130;255;130mPrice\t\033[38;2;255;255;0m|\033[38;2;130;255;130m" +
+                "Seats\033[38;2;255;255;0m|\033[0m");
         System.out.println("................................................................................................");
-        System.out.printf("|%s\t\t\t\t|%s\t\t\t\t|%s\t\t\t\t\t|%s\t\t\t\t|%s\t\t\t\t|%d\t\t\t\t|%d|%n", flights.get(i).getFlightId(), 
+        System.out.printf("|%s\t|%s\t|%s\t|%s\t|%s\t|%d\t|%d|%n", flights.get(i).getFlightId(),
                 flights.get(i).getOrigin(), flights.get(i).getDestination(), flights.get(i).getDate(),
                 flights.get(i).getTime(), flights.get(i).getPrice(), flights.get(i).getSeats());
         sc.nextLine();

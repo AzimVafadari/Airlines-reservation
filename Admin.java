@@ -119,12 +119,17 @@ public class Admin {
         return;
     }
     public void flightSchedule(){
-        System.out.println("|FlightId\t\t\t|Origin\t\t\t\t|Destination\t\t\t\t|Date\t\t\t\t|Time\t\t\t\t|Price\t\t\t\t|Seats|");
+        System.out.println("\033[38;2;255;255;0m|\033[38;2;130;255;130mFlightId\t\033[38;2;255;255;0m|\033[38;2;130;255;130m" +
+                "Origin\t\033[38;2;255;255;0m|\033[38;2;130;255;130m" +
+                "Destination\t\033[38;2;255;255;0m|\033[38;2;130;255;130mDate\t" +
+                "\033[38;2;255;255;0m|\033[38;2;130;255;130mTime\t\033[38;2;255;255;0m|\033[38;2;130;255;130mPrice\t\033[38;2;255;255;0m|\033[38;2;130;255;130m" +
+                "Seats\033[38;2;255;255;0m|\033[0m");
         for (int i = 0; i < cnt_flight; i++) {
-            System.out.println("................................................................................................." +
-                    "......................................................................................................");
-            System.out.printf("|%s\t\t\t\t|%s\t\t\t\t|%s\t\t\t\t\t|%s\t\t\t\t|%s\t\t\t\t|%d\t\t\t\t|%d|%n", flights.get(i).getFlightId(), flights.get(i).getOrigin(),
-                    flights.get(i).getDestination(), flights.get(i).getDate(), flights.get(i).getTime(), flights.get(i).getPrice(), flights.get(i).getSeats());
+            System.out.println("........................................." +
+                    "............................................");
+            System.out.printf("|%s\t|%s\t|%s\t|%s\t|%s\t|%d\t|%d|%n", flights.get(i).getFlightId(),
+                    flights.get(i).getOrigin(), flights.get(i).getDestination(), flights.get(i).getDate(),
+                    flights.get(i).getTime(), flights.get(i).getPrice(), flights.get(i).getSeats());
         }
         sc.nextLine();
     }
