@@ -41,25 +41,30 @@ public class Admin {
     public void add(){
         cnt_flight++;
         flight = new Flight();
-        System.out.print("\033[38;2;255;255;215mFlight id\033[38;2;255;255;0m:\033[38;2;255;255;215m ");
+        System.out.print("\033[38;2;255;255;200mFlight id\033[38;2;255;255;0m:\033[38;2;255;255;200m ");
         flight.setFlightId(sc.next());
-        System.out.print("Origin\033[38;2;255;255;0m:\033[38;2;255;255;215m ");
+        System.out.print("Origin\033[38;2;255;255;0m:\033[38;2;255;255;200m ");
         flight.setOrigin(sc.next());
-        System.out.print("Destination\033[38;2;255;255;0m:\033[38;2;255;255;215m ");
+        System.out.print("Destination\033[38;2;255;255;0m:\033[38;2;255;255;200m ");
         flight.setDestination(sc.next());
-        System.out.print("Date\033[38;2;255;255;0m:\033[38;2;255;255;215m ");
+        System.out.print("Date\033[38;2;255;255;0m:\033[38;2;255;255;200m ");
         flight.setDate(sc.next());
-        System.out.print("Time\033[38;2;255;255;0m:\033[38;2;255;255;215m ");
+        System.out.print("Time\033[38;2;255;255;0m:\033[38;2;255;255;200m ");
         flight.setTime(sc.next());
-        System.out.print("Price\033[38;2;255;255;0m:\033[38;2;255;255;215m ");
-        flight.setPrice(sc.nextInt());
-        System.out.print("Seats\033[38;2;255;255;0m: \033[0m");
-        flight.setSeats(sc.nextInt());
+        do {
+            System.out.print("Price\033[38;2;255;255;0m:\033[38;2;255;255;200m ");
+            flight.setPrice(sc.nextInt());
+        }while (flight.getPrice() < 0);
+        do {
+            System.out.print("Seats\033[38;2;255;255;0m: ");
+            flight.setSeats(sc.nextInt());
+        }while(flight.getSeats() < 0);
+        System.out.println("\033[38;2;255;255;200m\033[0m");
         flights.add(flight);
         return;
     }
     public void update() {
-        System.out.println("\033[38;2;255;255;215mEnter the flight id\033[38;2;255;255;0m:\033[38;2;255;255;215m    ");
+        System.out.println("\033[38;2;255;255;200mEnter the flight id\033[38;2;255;255;0m:\033[38;2;255;255;200m    ");
         String id = sc.next();
         int i;
         for (i = 0; i < cnt_flight; i++) {
@@ -67,65 +72,71 @@ public class Admin {
                 break;
         }
         i--;
-        System.out.println("\033[38;2;255;255;215m<\033[38;2;255;255;0m1\033[38;2;255;255;215m> Flight id\n" +
-                "\033[38;2;255;255;215m<\033[38;2;255;255;0m2\033[38;2;255;255;215m> Origin\n" +
-                "\033[38;2;255;255;215m<\033[38;2;255;255;0m3\033[38;2;255;255;215m> Destination\n" +
-                "\033[38;2;255;255;215m<\033[38;2;255;255;0m4\033[38;2;255;255;215m> Date\n" +
-                "\033[38;2;255;255;215m<\033[38;2;255;255;0m5\033[38;2;255;255;215m> Time\n" +
-                "\033[38;2;255;255;215m<\033[38;2;255;255;0m6\033[38;2;255;255;215m> Price\n" +
-                "\033[38;2;255;255;215m<\033[38;2;255;255;0m7\033[38;2;255;255;215m> Seats\n" +
-                "\033[38;2;255;255;215m<\033[38;2;255;255;0m-1\033[38;2;255;255;215m> Return\n\033[0m");
+        System.out.println("\033[38;2;255;255;200m<\033[38;2;255;255;0m1\033[38;2;255;255;200m> Flight id\n" +
+                "\033[38;2;255;255;200m<\033[38;2;255;255;0m2\033[38;2;255;255;200m> Origin\n" +
+                "\033[38;2;255;255;200m<\033[38;2;255;255;0m3\033[38;2;255;255;200m> Destination\n" +
+                "\033[38;2;255;255;200m<\033[38;2;255;255;0m4\033[38;2;255;255;200m> Date\n" +
+                "\033[38;2;255;255;200m<\033[38;2;255;255;0m5\033[38;2;255;255;200m> Time\n" +
+                "\033[38;2;255;255;200m<\033[38;2;255;255;0m6\033[38;2;255;255;200m> Price\n" +
+                "\033[38;2;255;255;200m<\033[38;2;255;255;0m7\033[38;2;255;255;200m> Seats\n" +
+                "\033[38;2;255;255;200m<\033[38;2;255;255;0m-1\033[38;2;255;255;200m> Return\n");
         int command = sc.nextInt();
+        deleteScreen();
         while(command != -1){
             switch(command){
                 case 1:
-                    System.out.print("\n\033[38;2;255;255;215mFlight id\033[38;2;255;255;0m:\033[38;2;255;255;215m ");
+                    System.out.print("\033[38;2;255;255;200mFlight id\033[38;2;255;255;0m:\033[38;2;255;255;200m ");
                     flights.get(i).setFlightId(sc.next());
                     break;
                 case 2:
-                    System.out.print("\nOrigin\033[38;2;255;255;0m:\033[38;2;255;255;215m ");
+                    System.out.print("\nOrigin\033[38;2;255;255;0m:\033[38;2;255;255;200m ");
                     flights.get(i).setOrigin(sc.next());
                     break;
                 case 3:
-                    System.out.print("\nDestination\033[38;2;255;255;0m:\033[38;2;255;255;215m ");
+                    System.out.print("\nDestination\033[38;2;255;255;0m:\033[38;2;255;255;200m ");
                     flights.get(i).setDestination(sc.next());
                     break;
                 case 4:
-                    System.out.print("\nDate\033[38;2;255;255;0m:\033[38;2;255;255;215m ");
+                    System.out.print("\nDate\033[38;2;255;255;0m:\033[38;2;255;255;200m ");
                     flights.get(i).setDate(sc.next());
                     break;
                 case 5:
-                    System.out.print("\nTime\033[38;2;255;255;0m:\033[38;2;255;255;215m ");
+                    System.out.print("\nTime\033[38;2;255;255;0m:\033[38;2;255;255;200m ");
                     flights.get(i).setTime(sc.next());
                     break;
                 case 6:
-                    System.out.print("\nPrice\033[38;2;255;255;0m:\033[38;2;255;255;215m ");
-                    flights.get(i).setPrice(sc.nextInt());
+                    do {
+                        System.out.print("\nPrice\033[38;2;255;255;0m:\033[38;2;255;255;200m ");
+                        flights.get(i).setPrice(sc.nextInt());
+                    }while(flight.getPrice() < 0);
                     break;
                 case 7:
-                    System.out.print("\nSeats\033[38;2;255;255;0m:\033[38;2;255;255;215m ");
-                    flights.get(i).setSeats(sc.nextInt());
+                    do {
+                        System.out.print("\nSeats\033[38;2;255;255;0m:\033[38;2;255;255;200m ");
+                        flights.get(i).setSeats(sc.nextInt());
+                    }while(flight.getSeats() < 0);
                     break;
             }
             deleteScreen();
-            System.out.println("\033[38;2;255;255;215m<\033[38;2;255;255;0m1\033[38;2;255;255;215m> Flight id\n" +
-                    "\033[38;2;255;255;215m<\033[38;2;255;255;0m2\033[38;2;255;255;215m> Origin\n" +
-                    "\033[38;2;255;255;215m<\033[38;2;255;255;0m3\033[38;2;255;255;215m> Destination\n" +
-                    "\033[38;2;255;255;215m<\033[38;2;255;255;0m4\033[38;2;255;255;215m> Date\n" +
-                    "\033[38;2;255;255;215m<\033[38;2;255;255;0m5\033[38;2;255;255;215m> Time\n" +
-                    "\033[38;2;255;255;215m<\033[38;2;255;255;0m6\033[38;2;255;255;215m> Price\n" +
-                    "\033[38;2;255;255;215m<\033[38;2;255;255;0m7\033[38;2;255;255;215m> Seats\n" +
-                    "\033[38;2;255;255;215m<\033[38;2;255;255;0m-1\033[38;2;255;255;215m> Return\n\033[0m");
+            System.out.println("\033[38;2;255;255;200m<\033[38;2;255;255;0m1\033[38;2;255;255;200m> Flight id\n" +
+                    "\033[38;2;255;255;200m<\033[38;2;255;255;0m2\033[38;2;255;255;200m> Origin\n" +
+                    "\033[38;2;255;255;200m<\033[38;2;255;255;0m3\033[38;2;255;255;200m> Destination\n" +
+                    "\033[38;2;255;255;200m<\033[38;2;255;255;0m4\033[38;2;255;255;200m> Date\n" +
+                    "\033[38;2;255;255;200m<\033[38;2;255;255;0m5\033[38;2;255;255;200m> Time\n" +
+                    "\033[38;2;255;255;200m<\033[38;2;255;255;0m6\033[38;2;255;255;200m> Price\n" +
+                    "\033[38;2;255;255;200m<\033[38;2;255;255;0m7\033[38;2;255;255;200m> Seats\n" +
+                    "\033[38;2;255;255;200m<\033[38;2;255;255;0m-1\033[38;2;255;255;200m> Return\n\033[0m");
             command = sc.nextInt();
+            deleteScreen();
         }
         return;
     }
-    public static void deleteScreen(){
+    public void deleteScreen(){
         System.out.print("\033[H\033[2J");
         System.out.flush();
     }
     public void remove(){
-        System.out.println("\033[38;2;255;255;215mFlight id\033[38;2;255;255;0m: \033[0m");
+        System.out.println("\033[38;2;255;255;200mFlight id\033[38;2;255;255;0m: \033[0m");
         String target = sc.next();
         for (int i = 0; i < cnt_flight; i++) {
             if(flights.get(i).getFlightId() == target)
@@ -135,20 +146,20 @@ public class Admin {
         return;
     }
     public void flightSchedule(){
-        System.out.println("\033[38;2;255;255;0m|\033[38;2;255;255;215mFlightId\t\033[38;2;255;255;0m|\033[38;2;255;255;215m" +
-                "Origin\t\033[38;2;255;255;0m|\033[38;2;255;255;215m" +
-                "Destination\t\033[38;2;255;255;0m|\033[38;2;255;255;215mDate\t" +
-                "\033[38;2;255;255;0m|\033[38;2;255;255;215mTime\t\033[38;2;255;255;0m|\033[38;2;255;255;215mPrice\t\033[38;2;255;255;0m|\033[38;2;255;255;215m" +
+        System.out.println("\033[38;2;255;255;0m|\033[38;2;255;255;200mFlightId\t\033[38;2;255;255;0m|\033[38;2;255;255;200m" +
+                "Origin\t\033[38;2;255;255;0m|\033[38;2;255;255;200m" +
+                "Destination\t\033[38;2;255;255;0m|\033[38;2;255;255;200mDate\t\t" +
+                "\033[38;2;255;255;0m|\033[38;2;255;255;200mTime\t\033[38;2;255;255;0m|\033[38;2;255;255;200mPrice\t\033[38;2;255;255;0m|\033[38;2;255;255;200m" +
                 "Seats\033[38;2;255;255;0m|\033[0m");
         for (int i = 0; i < cnt_flight; i++) {
-            System.out.println("\033[38;2;255;255;255m.......................................................................\033[0m");
-            System.out.printf("\033[38;2;255;255;0m|\033[38;2;255;255;215m%s\t\t" +
-                            "\033[38;2;255;255;0m|\033[38;2;255;255;215m%s\t" +
-                            "\033[38;2;255;255;0m|\033[38;2;255;255;215m%s\t" +
-                            "\033[38;2;255;255;0m|\033[38;2;255;255;215m%s\t" +
-                            "\033[38;2;255;255;0m|\033[38;2;255;255;215m%s\t" +
-                            "\033[38;2;255;255;0m|\033[38;2;255;255;215m%d\t" +
-                            "\033[38;2;255;255;0m|\033[38;2;255;255;215m%d" +
+            System.out.println("\033[38;2;255;255;255m...............................................................................\033[0m");
+            System.out.printf("\033[38;2;255;255;0m|\033[38;2;255;255;200m%s\t\t" +
+                            "\033[38;2;255;255;0m|\033[38;2;255;255;200m%s\t" +
+                            "\033[38;2;255;255;0m|\033[38;2;255;255;200m%s\t\t" +
+                            "\033[38;2;255;255;0m|\033[38;2;255;255;200m%s\t" +
+                            "\033[38;2;255;255;0m|\033[38;2;255;255;200m%s\t" +
+                            "\033[38;2;255;255;0m|\033[38;2;255;255;200m%d\t" +
+                            "\033[38;2;255;255;0m|\033[38;2;255;255;200m%d" +
                             "\033[38;2;255;255;0m|%n\033[0m", flights.get(i).getFlightId(),
                     flights.get(i).getOrigin(), flights.get(i).getDestination(), flights.get(i).getDate(),
                     flights.get(i).getTime(), flights.get(i).getPrice(), flights.get(i).getSeats());

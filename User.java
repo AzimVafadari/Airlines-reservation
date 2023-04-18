@@ -6,6 +6,7 @@ public class User {
     private String username;
     private String password;
     private ArrayList<Flight> flights = new ArrayList<Flight>();
+    private ArrayList<String> cancelledTickets = new ArrayList<>();
     public static Scanner sc = new Scanner(System.in);
     private ArrayList<String> bookedTicket = new ArrayList<String>();
     private int charge = 0;
@@ -29,19 +30,20 @@ public class User {
         this.password = password;
     }
     public void changePassword(){
-        System.out.println("\033[38;2;130;255;130mEnter your new password: \033[0m");
+        System.out.println("\033[38;2;130;255;130mEnter your new password: \033[38;2;0;255;0m");
         setPassword(sc.next());
+        System.out.println("\033[0m");
         return;
     }
     public void searchFlightsTickets(){
-        System.out.println("\033[38;2;255;255;215m<\033[38;2;255;255;0m1\033[38;2;255;255;215m> Based on flight id\n" +
-                "\033[38;2;255;255;215m<\033[38;2;255;255;0m2\033[38;2;255;255;215m> Based on origin\n" +
-                "\033[38;2;255;255;215m<\033[38;2;255;255;0m3\033[38;2;255;255;215m> Based on destination\n" +
-                "\033[38;2;255;255;215m<\033[38;2;255;255;0m4\033[38;2;255;255;215m> Based on date\n" +
-                "\033[38;2;255;255;215m<\033[38;2;255;255;0m5\033[38;2;255;255;215m> Based on time\n" +
-                "\033[38;2;255;255;215m<\033[38;2;255;255;0m6\033[38;2;255;255;215m> Based on price\n" +
-                "\033[38;2;255;255;215m<\033[38;2;255;255;0m7\033[38;2;255;255;215m> Based on seats\n" +
-                "\033[38;2;255;255;215m<\033[38;2;255;255;0m-1\033[38;2;255;255;215m> Return\n");
+        System.out.println("\033[38;2;255;255;200m<\033[38;2;255;255;0m1\033[38;2;255;255;200m> Based on flight id\n" +
+                "\033[38;2;255;255;200m<\033[38;2;255;255;0m2\033[38;2;255;255;200m> Based on origin\n" +
+                "\033[38;2;255;255;200m<\033[38;2;255;255;0m3\033[38;2;255;255;200m> Based on destination\n" +
+                "\033[38;2;255;255;200m<\033[38;2;255;255;0m4\033[38;2;255;255;200m> Based on date\n" +
+                "\033[38;2;255;255;200m<\033[38;2;255;255;0m5\033[38;2;255;255;200m> Based on time\n" +
+                "\033[38;2;255;255;200m<\033[38;2;255;255;0m6\033[38;2;255;255;200m> Based on price\n" +
+                "\033[38;2;255;255;200m<\033[38;2;255;255;0m7\033[38;2;255;255;200m> Based on seats\n" +
+                "\033[38;2;255;255;200m<\033[38;2;255;255;0m-1\033[38;2;255;255;200m> Return\n");
         int command = sc.nextInt();
         String compare = new String();
         int compareInt;
@@ -132,6 +134,7 @@ public class User {
     public void ticketCancellation(){
         System.out.println("\033[38;2;130;255;130mEnter your ticket id: \033[0m");
         String ticketId = sc.next();
+        cancelledTickets.add(ticketId);
         String tmp = new String();
         int i = 0;
         while(ticketId.charAt(i) != '@'){
@@ -154,23 +157,24 @@ public class User {
         sc.nextLine();
     }
     public void addCharge(){
-        System.out.println("\033[38;2;0;255;0mYour charge is: " + charge + "\nEnter the charge you want to add: \033[0m");
+        System.out.println("\033[38;2;0;255;0mYour charge is: " + charge + "\nEnter the charge you want to add: \033[38;2;255;255;0m");
         charge += sc.nextInt();
+        System.out.println("\033[0m");
     }
     public void showFlight(int i){
-        System.out.println("\033[38;2;255;255;0m|\033[38;2;130;255;130mFlightId\t\033[38;2;255;255;0m|\033[38;2;130;255;130m" +
-                "Origin\t\033[38;2;255;255;0m|\033[38;2;130;255;130m" +
-                "Destination\t\033[38;2;255;255;0m|\033[38;2;130;255;130mDate\t" +
-                "\033[38;2;255;255;0m|\033[38;2;130;255;130mTime\t\033[38;2;255;255;0m|\033[38;2;130;255;130mPrice\t\033[38;2;255;255;0m|\033[38;2;130;255;130m" +
+        System.out.println("\033[38;2;255;255;0m|\033[38;2;255;255;200mFlightId\t\033[38;2;255;255;0m|\033[38;2;255;255;200m" +
+                "Origin\t\033[38;2;255;255;0m|\033[38;2;255;255;200m" +
+                "Destination\t\033[38;2;255;255;0m|\033[38;2;255;255;200mDate\t\t" +
+                "\033[38;2;255;255;0m|\033[38;2;255;255;200mTime\t\033[38;2;255;255;0m|\033[38;2;255;255;200mPrice\t\033[38;2;255;255;0m|\033[38;2;255;255;200m" +
                 "Seats\033[38;2;255;255;0m|\033[0m");
-        System.out.println("\033[38;2;0;0;0m.................................................................\033[0m");
-        System.out.printf("\033[38;2;255;255;0m|\033[38;2;130;255;130m%s\t" +
-                        "\033[38;2;255;255;0m|\033[38;2;130;255;130m%s\t" +
-                        "\033[38;2;255;255;0m|\033[38;2;130;255;130m%s\t" +
-                        "\033[38;2;255;255;0m|\033[38;2;130;255;130m%s\t" +
-                        "\033[38;2;255;255;0m|\033[38;2;130;255;130m%s\t" +
-                        "\033[38;2;255;255;0m|\033[38;2;130;255;130m%d\t" +
-                        "\033[38;2;255;255;0m|\033[38;2;130;255;130m%d" +
+        System.out.println("\033[38;2;255;255;255m...............................................................................\033[0m");
+        System.out.printf("\033[38;2;255;255;0m|\033[38;2;255;255;200m%s\t\t" +
+                        "\033[38;2;255;255;0m|\033[38;2;255;255;200m%s\t" +
+                        "\033[38;2;255;255;0m|\033[38;2;255;255;200m%s\t\t" +
+                        "\033[38;2;255;255;0m|\033[38;2;255;255;200m%s\t" +
+                        "\033[38;2;255;255;0m|\033[38;2;255;255;200m%s\t" +
+                        "\033[38;2;255;255;0m|\033[38;2;255;255;200m%d\t" +
+                        "\033[38;2;255;255;0m|\033[38;2;255;255;200m%d" +
                         "\033[38;2;255;255;0m|%n\033[0m", flights.get(i).getFlightId(),
                 flights.get(i).getOrigin(), flights.get(i).getDestination(), flights.get(i).getDate(),
                 flights.get(i).getTime(), flights.get(i).getPrice(), flights.get(i).getSeats());
