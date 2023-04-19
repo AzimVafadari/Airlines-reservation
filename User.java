@@ -118,8 +118,25 @@ public class User {
         String flightId = new String();
         System.out.println("\033[38;2;130;255;130mEnter flight id: \033[0m");
         flightId = sc.next();
+        for (int i = 0; i < cancelledTickets.size(); i++) {
+            String tmp = new String();
+            int j = 0;
+            while(cancelledTickets.get(i).charAt(j) != '@'){
+                tmp += cancelledTickets.get(i).charAt(j);
+                j++;
+            }
+            if(tmp.equals(flightId)){
+                flightId = cancelledTickets.get(i);
+                cancelledTickets.remove(i);
+                return;
+            }
+        }
         for (int i = 0; i < flights.size(); i++) {
             if(flightId.equals(flights.get(i).getFlightId())){
+                if(flights.get(i).getPrice() > charge){
+                    System.out.println("\033[38;2;255;0;0mYour charge isn't enough go back and add charge \033[38;2;0;255;0m:)\033[0m");
+                    return;
+                }
                 flightId += "@";
                 flightId += Integer.toString(flights.get(i).getSeats());
                 flights.get(i).setSeats(flights.get(i).getSeats() - 1);
@@ -127,7 +144,7 @@ public class User {
                 System.out.println(flightId);
                 bookedTicket.add(flightId);
                 charge -= flights.get(i).getPrice();
-                break;
+                return;
             }
         }
     }
