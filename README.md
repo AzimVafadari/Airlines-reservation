@@ -2,6 +2,7 @@
 This project aims to simulate the online reservation system of airline tickets in a console application (non-graphics). 
 The airline reservations System contains airline schedules, passenger reservations, and ticket records. 
 This system includes two types of users like passengers, and system administrator.
+
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
            WELCOME TO AIRELINE RESERVATION SYSTEM
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -13,6 +14,7 @@ This system includes two types of users like passengers, and system administrato
 Use your Account to sign in or create new one. The admin user is pre-defined with a fixed username and password (Admin).
 
 Admin User: After admin login, the guidance commands display:
+
 ::::::::::::::::::::::::::::::::::::::::
            Admin MENUE OPTIONS
 ::::::::::::::::::::::::::::::::::::::::
@@ -22,7 +24,9 @@ Admin User: After admin login, the guidance commands display:
     <3> Remove
     <4> Flight schedules
     <0> Sign out
+    
     The admin is able to add, update or remove flight details. The flight schedule includes the following:
+    
 |FlightId   |Origin     |Destination  |Date        |Time       |Price      |Seats |
 ...................................................................................
 |WX-12      |Yazd       |Tehran       |1401-12-10  |12:30      |700,000    |51    |
@@ -31,9 +35,11 @@ Admin User: After admin login, the guidance commands display:
 ...................................................................................
 |BG-22      |Shiraz     |Tabriz       |1401-12-12  |22:30      |1,100,000  |12    |
 ...................................................................................
+
 Seat refers to available seats that are reduced by booking a ticket.
 
 Other Users: After creating your account as a new passenger, and sign in, the guidance menu options display as follows:
+
 ::::::::::::::::::::::::::::::::::::::::
          PASSENGER MENU OPTIONS
 ::::::::::::::::::::::::::::::::::::::::
@@ -45,6 +51,7 @@ Other Users: After creating your account as a new passenger, and sign in, the gu
     <5> Booked tickets
     <6> Add charge
     <0> Sign out
+    
     Filter tickets based on flight id, origin, destination, date, time, price range, or some of them in “Search flight tickets” mode.
 The “Booking ticket” mode is based on flight id. By booking each ticket, a unique code is generated as a ticket id.
 The “ticket cancellation” process by each ticket id would be confirmed and the refund would be credited back to the account(charge).
