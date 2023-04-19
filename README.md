@@ -25,9 +25,9 @@ Admin User: After admin login, the guidance commands display:
     <4> Flight schedules
     <0> Sign out
     
-    The admin is able to add, update or remove flight details. The flight schedule includes the following:
+The admin is able to add, update or remove flight details. The flight schedule includes the following:
     
-|FlightId   |Origin     |Destination  |Date        |Time       |Price      |Seats |
+    |FlightId   |Origin     |Destination  |Date        |Time       |Price      |Seats |
 ...................................................................................
 |WX-12      |Yazd       |Tehran       |1401-12-10  |12:30      |700,000    |51    |
 ...................................................................................
