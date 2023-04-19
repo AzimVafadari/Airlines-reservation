@@ -4,15 +4,16 @@ import java.util.Scanner;
 public class Admin {
     public static Scanner sc = new Scanner(System.in);
     public static int command;
-    public int cnt_flight = 0;
+    public int cnt_flight = 1;
     private String username = "Admin";
     private String password = "Admin";
     private ArrayList<Flight> flights = new ArrayList<Flight>();
-    private Flight flight;
+    private Flight flight = new Flight("YT-83", "Yazd", "Tehran", "1402/03/13", "14:30", 20000000, 14);
     public Admin(String username, String password, ArrayList<Flight> flights) {
         this.username = username;
         this.password = password;
         this.flights = flights;
+        this.flights.add(flight);
     }
 
     public ArrayList<Flight> getFlights() {
@@ -40,7 +41,6 @@ public class Admin {
     }
     public void add(){
         cnt_flight++;
-        flight = new Flight();
         System.out.print("\033[38;2;255;255;200mFlight id\033[38;2;255;255;0m:\033[38;2;255;255;200m ");
         flight.setFlightId(sc.next());
         System.out.print("Origin\033[38;2;255;255;0m:\033[38;2;255;255;200m ");
@@ -147,19 +147,19 @@ public class Admin {
     }
     public void flightSchedule(){
         System.out.println("\033[38;2;255;255;0m|\033[38;2;255;255;200mFlightId\t\033[38;2;255;255;0m|\033[38;2;255;255;200m" +
-                "Origin\t\033[38;2;255;255;0m|\033[38;2;255;255;200m" +
+                "Origin\t\t\033[38;2;255;255;0m|\033[38;2;255;255;200m" +
                 "Destination\t\033[38;2;255;255;0m|\033[38;2;255;255;200mDate\t\t" +
-                "\033[38;2;255;255;0m|\033[38;2;255;255;200mTime\t\033[38;2;255;255;0m|\033[38;2;255;255;200mPrice\t\033[38;2;255;255;0m|\033[38;2;255;255;200m" +
-                "Seats\033[38;2;255;255;0m|\033[0m");
+                "\033[38;2;255;255;0m|\033[38;2;255;255;200mTime\t\t\033[38;2;255;255;0m|\033[38;2;255;255;200mPrice\t\t\033[38;2;255;255;0m|\033[38;2;255;255;200m" +
+                "Seats\t\033[38;2;255;255;0m|\033[0m");
         for (int i = 0; i < cnt_flight; i++) {
-            System.out.println("\033[38;2;255;255;255m...............................................................................\033[0m");
+            System.out.println("\033[38;2;255;255;255m.........................................................................................................\033[0m");
             System.out.printf("\033[38;2;255;255;0m|\033[38;2;255;255;200m%s\t\t" +
-                            "\033[38;2;255;255;0m|\033[38;2;255;255;200m%s\t" +
+                            "\033[38;2;255;255;0m|\033[38;2;255;255;200m%s\t\t" +
                             "\033[38;2;255;255;0m|\033[38;2;255;255;200m%s\t\t" +
                             "\033[38;2;255;255;0m|\033[38;2;255;255;200m%s\t" +
-                            "\033[38;2;255;255;0m|\033[38;2;255;255;200m%s\t" +
+                            "\033[38;2;255;255;0m|\033[38;2;255;255;200m%s\t\t" +
+                            "\033[38;2;255;255;0m|\033[38;2;255;255;200m%,d\t" +
                             "\033[38;2;255;255;0m|\033[38;2;255;255;200m%d\t" +
-                            "\033[38;2;255;255;0m|\033[38;2;255;255;200m%d" +
                             "\033[38;2;255;255;0m|%n\033[0m", flights.get(i).getFlightId(),
                     flights.get(i).getOrigin(), flights.get(i).getDestination(), flights.get(i).getDate(),
                     flights.get(i).getTime(), flights.get(i).getPrice(), flights.get(i).getSeats());

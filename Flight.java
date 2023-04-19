@@ -4,6 +4,17 @@ public class Flight {
     private String destination;
     private String date;
     private String time;
+
+    public Flight(String flightId, String origin, String destination, String date, String time, int price, int seats) {
+        this.flightId = flightId;
+        this.origin = origin;
+        this.destination = destination;
+        this.date = date;
+        this.time = time;
+        this.price = price;
+        this.seats = seats;
+    }
+
     private int price;
     private int seats;
     public String getFlightId() {
