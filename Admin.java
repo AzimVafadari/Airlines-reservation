@@ -13,9 +13,9 @@ public class Admin {
         this.username = username;
         this.password = password;
         this.flights = flights;
-        flight = new Flight("WX-12 ", "Yazd", "Tehran", "1401-12-10", "12:30", 700000, 51);
+        flight = new Flight("WX-12", "Yazd", "Tehran", "1401-12-10", "12:30", 700000, 51);
         this.flights.add(flight);
-        flight = new Flight("WX-15 ", "Mashhad", "Ahvaz", "1401-12-11", "08:00", 900000, 245);
+        flight = new Flight("WX-15", "Mashhad", "Ahvaz", "1401-12-11", "08:00", 900000, 245);
         this.flights.add(flight);
         flight = new Flight("BG-22", "Shiraz", "Tabriz", "1401-12-12", "22:30", 1100000, 12);
         this.flights.add(flight);

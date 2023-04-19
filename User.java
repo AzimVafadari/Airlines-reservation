@@ -45,6 +45,7 @@ public class User {
                 "\033[38;2;255;255;200m<\033[38;2;255;255;0m7\033[38;2;255;255;200m> Based on seats\n" +
                 "\033[38;2;255;255;200m<\033[38;2;255;255;0m-1\033[38;2;255;255;200m> Return\n");
         int command = sc.nextInt();
+        deleteScreen();
         String compare = new String();
         int compareInt;
         while(command != -1){
@@ -108,8 +109,14 @@ public class User {
             }
             sc.nextLine();
             deleteScreen();
-            System.out.println("<1>Based on flight id\n<2> Based on origin\n<3> Based on destination\n<4> Based on date\n" +
-                    "<5> Based on time\n<6> Based on price\n<7> Based on seats\n<-1> Return\n");
+            System.out.println("\033[38;2;255;255;200m<\033[38;2;255;255;0m1\033[38;2;255;255;200m> Based on flight id\n" +
+                    "\033[38;2;255;255;200m<\033[38;2;255;255;0m2\033[38;2;255;255;200m> Based on origin\n" +
+                    "\033[38;2;255;255;200m<\033[38;2;255;255;0m3\033[38;2;255;255;200m> Based on destination\n" +
+                    "\033[38;2;255;255;200m<\033[38;2;255;255;0m4\033[38;2;255;255;200m> Based on date\n" +
+                    "\033[38;2;255;255;200m<\033[38;2;255;255;0m5\033[38;2;255;255;200m> Based on time\n" +
+                    "\033[38;2;255;255;200m<\033[38;2;255;255;0m6\033[38;2;255;255;200m> Based on price\n" +
+                    "\033[38;2;255;255;200m<\033[38;2;255;255;0m7\033[38;2;255;255;200m> Based on seats\n" +
+                    "\033[38;2;255;255;200m<\033[38;2;255;255;0m-1\033[38;2;255;255;200m> Return\n");
             command = sc.nextInt();
         }
         return;
@@ -135,12 +142,12 @@ public class User {
             if(flightId.equals(flights.get(i).getFlightId())){
                 if(flights.get(i).getPrice() > charge){
                     System.out.println("\033[38;2;255;0;0mYour charge isn't enough go back and add charge \033[38;2;0;255;0m:)\033[0m");
+                    sc.nextLine();
                     return;
                 }
                 flightId += "@";
                 flightId += Integer.toString(flights.get(i).getSeats());
                 flights.get(i).setSeats(flights.get(i).getSeats() - 1);
-                System.out.println(flightId.length());
                 System.out.println(flightId);
                 bookedTicket.add(flightId);
                 charge -= flights.get(i).getPrice();
@@ -148,6 +155,7 @@ public class User {
             }
         }
     }
+    //This part is ticket
     public void ticketCancellation(){
         System.out.println("\033[38;2;130;255;130mEnter your ticket id: \033[0m");
         String ticketId = sc.next();
