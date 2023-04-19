@@ -4,15 +4,20 @@ import java.util.Scanner;
 public class Admin {
     public static Scanner sc = new Scanner(System.in);
     public static int command;
-    public int cnt_flight = 1;
+    public int cnt_flight = 3;
     private String username = "Admin";
     private String password = "Admin";
     private ArrayList<Flight> flights = new ArrayList<Flight>();
-    private Flight flight = new Flight("YT-83", "Yazd", "Tehran", "1402/03/13", "14:30", 20000000, 14);
+    private Flight flight;
     public Admin(String username, String password, ArrayList<Flight> flights) {
         this.username = username;
         this.password = password;
         this.flights = flights;
+        flight = new Flight("WX-12 ", "Yazd", "Tehran", "1401-12-10", "12:30", 700000, 51);
+        this.flights.add(flight);
+        flight = new Flight("WX-15 ", "Mashhad", "Ahvaz", "1401-12-11", "08:00", 900000, 245);
+        this.flights.add(flight);
+        flight = new Flight("BG-22", "Shiraz", "Tabriz", "1401-12-12", "22:30", 1100000, 12);
         this.flights.add(flight);
     }
 
