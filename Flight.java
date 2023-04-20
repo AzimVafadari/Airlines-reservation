@@ -4,6 +4,16 @@ public class Flight {
     private String destination;
     private String date;
     private String time;
+    // The number of tickets that is reserved or cancelled by this flight
+    private int cntTickets = 0;
+
+    public int getCntTickets() {
+        return cntTickets;
+    }
+
+    public void setCntTickets(int cntTickets) {
+        this.cntTickets = cntTickets;
+    }
 
     public Flight(String flightId, String origin, String destination, String date, String time, int price, int seats) {
         this.flightId = flightId;
