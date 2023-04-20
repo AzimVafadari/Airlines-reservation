@@ -294,7 +294,7 @@ public class User {
                 flights.get(i).getOrigin(), flights.get(i).getDestination(), flights.get(i).getDate(),
                 flights.get(i).getTime(), flights.get(i).getPrice(), flights.get(i).getSeats());
     }
-    public static void deleteScreen(){
+    public void deleteScreen(){
         System.out.print("\033[H\033[2J");
         System.out.flush();
     }
