@@ -10,7 +10,7 @@ public class Menu {
     private int cnt_flight = 0;
     private int cnt_user = 0;
     private int userNumber = 0;
-    public static int command;
+    public int command;
     private ArrayList<Flight> flights = new ArrayList<Flight>();
     private User user = new User(flights);
     private Admin admin = new Admin("Admin", "Admin", flights);
@@ -46,11 +46,21 @@ public class Menu {
                 break;
             case 2:
                 System.out.println("\033[38;2;255;255;200musername\033[38;2;255;255;0m: \033[38;2;255;255;200");
-                this.user.setUsername(sc.next());
+                username = sc.next();
                 System.out.println("\033[0m");
                 System.out.println("\033[38;2;255;255;200mpassword\033[38;2;255;255;0m: \033[38;2;255;255;200");
-                this.user.setPassword(sc.next());
-                System.out.println("\033[0m");
+                password = sc.next();
+                for (int i = 0; i < users.size(); i++) {
+                    if(username.equals(users.get(i).getUsername())){
+                        System.out.println("\033[38;2;255;255;200mThis user is already existing\033[38;2;255;0;0m :(\033[0m");
+                        sc.nextLine();
+                        sc.nextLine();
+                        menuOptions();
+                    }
+                }
+                System.out.print("\033[0m");
+                this.user.setUsername(username);
+                this.user.setPassword(password);
                 users.add(user);
                 cnt_user++;
                 break;
@@ -137,7 +147,7 @@ public class Menu {
         passengerMenuOptions();
     }
 
-    public static void deleteScreen1(){
+    public void deleteScreen1(){
         System.out.print("\033[H\033[2J");
         System.out.flush();
     }
