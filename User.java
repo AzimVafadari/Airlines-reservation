@@ -6,6 +6,7 @@ public class User {
     private String username;
     private String password;
     private ArrayList<Flight> flights = new ArrayList<Flight>();
+    private ArrayList<Flight> filteredFlights = new ArrayList<Flight>();
     public static Scanner sc = new Scanner(System.in);
     private ArrayList<String> bookedTicket = new ArrayList<String>();
     private int charge = 0;
@@ -36,7 +37,6 @@ public class User {
     }
     public void searchFlightsTickets(){
         //in this part it copies flights into filteredflights
-        ArrayList<Flight> filteredFlights = new ArrayList<Flight>();
         filteredFlights.addAll(flights);
 //        for (int i = 0; i < flights.size(); i++) {
 //            filteredFlights.get(i).setFlightId(flights.get(i).getFlightId());
@@ -62,7 +62,8 @@ public class User {
         String destination = null;
         String date = null;
         String time = null;
-        int price = 0;
+        int lowPrice = 0;
+        int highPrice = 0;
         String compare = new String();
         while(command != -1) {
             switch (command) {
@@ -79,9 +80,8 @@ public class User {
                             filteredFlights.remove(i);
                             i--;
                         }
-                        else
-                            showFlight(i);
                     }
+                    showFilteredFlights();
                     break;
                 case 2:
                     System.out.print("\nOrigin: ");
@@ -96,9 +96,8 @@ public class User {
                             filteredFlights.remove(i);
                             i--;
                         }
-                        else
-                            showFlight(i);
                     }
+                    showFilteredFlights();
                     break;
                 case 3:
                     System.out.print("\nDestination: ");
@@ -113,9 +112,8 @@ public class User {
                             filteredFlights.remove(i);
                             i--;
                         }
-                        else
-                            showFlight(i);
                     }
+                    showFilteredFlights();
                     break;
                 case 4:
                     System.out.print("\nDate: ");
@@ -130,9 +128,8 @@ public class User {
                             filteredFlights.remove(filteredFlights.get(i));
                             i--;
                         }
-                        else
-                            showFlight(i);
                     }
+                    showFilteredFlights();
                     break;
                 case 5:
                     System.out.print("\nTime: ");
@@ -147,26 +144,26 @@ public class User {
                             filteredFlights.remove(i);
                             i--;
                         }
-                        else
-                            showFlight(i);
                     }
+                    showFilteredFlights();
                     break;
                 case 6:
-                    System.out.print("\nPrice: ");
-                    price = sc.nextInt();
+                    System.out.print("\nPrice range from: ");
+                    lowPrice = sc.nextInt();
+                    System.out.print("\nto: ");
+                    highPrice = sc.nextInt();
                     System.out.println("\033[38;2;255;255;0m|\033[38;2;255;255;200mFlightId\t\033[38;2;255;255;0m|\033[38;2;255;255;200m" +
                             "Origin\t\t\033[38;2;255;255;0m|\033[38;2;255;255;200m" +
                             "Destination\t\033[38;2;255;255;0m|\033[38;2;255;255;200mDate\t\t" +
                             "\033[38;2;255;255;0m|\033[38;2;255;255;200mTime\t\t\033[38;2;255;255;0m|\033[38;2;255;255;200mPrice\t\t\033[38;2;255;255;0m|\033[38;2;255;255;200m" +
                             "Seats\t\033[38;2;255;255;0m|\033[0m");
                     for (int i = 0; i < filteredFlights.size(); i++) {
-                        if (price != filteredFlights.get(i).getPrice()) {
+                        if (lowPrice > filteredFlights.get(i).getPrice() || highPrice < filteredFlights.get(i).getPrice()) {
                             filteredFlights.remove(i);
                             i--;
                         }
-                        else
-                            showFlight(i);
                     }
+                    showFilteredFlights();
                     break;
                 case 7:
                     System.out.print("\nSeats: ");
@@ -188,19 +185,7 @@ public class User {
                             "Destination\t\033[38;2;255;255;0m|\033[38;2;255;255;200mDate\t\t" +
                             "\033[38;2;255;255;0m|\033[38;2;255;255;200mTime\t\t\033[38;2;255;255;0m|\033[38;2;255;255;200mPrice\t\t\033[38;2;255;255;0m|\033[38;2;255;255;200m" +
                             "Seats\t\033[38;2;255;255;0m|\033[0m");
-                    for (int i = 0; i < filteredFlights.size(); i++) {
-                        System.out.println("\033[38;2;255;255;255m.........................................................................................................\033[0m");
-                        System.out.printf("\033[38;2;255;255;0m|\033[38;2;255;255;200m%1$-15s" +
-                                        "\033[38;2;255;255;0m|\033[38;2;255;255;200m%2$-15s" +
-                                        "\033[38;2;255;255;0m|\033[38;2;255;255;200m%3$-15s" +
-                                        "\033[38;2;255;255;0m|\033[38;2;255;255;200m%4$-15s" +
-                                        "\033[38;2;255;255;0m|\033[38;2;255;255;200m%5$-15s" +
-                                        "\033[38;2;255;255;0m|\033[38;2;255;255;200m%6$-,15d" +
-                                        "\033[38;2;255;255;0m|\033[38;2;255;255;200m%7$-7d" +
-                                        "\033[38;2;255;255;0m|%n\033[0m", filteredFlights.get(i).getFlightId(),
-                                filteredFlights.get(i).getOrigin(), filteredFlights.get(i).getDestination(), filteredFlights.get(i).getDate(),
-                                filteredFlights.get(i).getTime(), filteredFlights.get(i).getPrice(), filteredFlights.get(i).getSeats());
-                    }
+                    showFilteredFlights();
                     break;
             }
             sc.nextLine();
@@ -217,6 +202,23 @@ public class User {
                     "\033[38;2;255;255;200m<\033[38;2;255;255;0m-1\033[38;2;255;255;200m> Return\n");
             command = sc.nextInt();
             deleteScreen();
+        }
+        return;
+    }
+    // This method show flights that is filtered by searching
+    public void showFilteredFlights() {
+        for (int i = 0; i < filteredFlights.size(); i++) {
+            System.out.println("\033[38;2;255;255;255m.........................................................................................................\033[0m");
+            System.out.printf("\033[38;2;255;255;0m|\033[38;2;255;255;200m%1$-15s" +
+                            "\033[38;2;255;255;0m|\033[38;2;255;255;200m%2$-15s" +
+                            "\033[38;2;255;255;0m|\033[38;2;255;255;200m%3$-15s" +
+                            "\033[38;2;255;255;0m|\033[38;2;255;255;200m%4$-15s" +
+                            "\033[38;2;255;255;0m|\033[38;2;255;255;200m%5$-15s" +
+                            "\033[38;2;255;255;0m|\033[38;2;255;255;200m%6$-,15d" +
+                            "\033[38;2;255;255;0m|\033[38;2;255;255;200m%7$-7d" +
+                            "\033[38;2;255;255;0m|%n\033[0m", filteredFlights.get(i).getFlightId(),
+                    filteredFlights.get(i).getOrigin(), filteredFlights.get(i).getDestination(), filteredFlights.get(i).getDate(),
+                    filteredFlights.get(i).getTime(), filteredFlights.get(i).getPrice(), filteredFlights.get(i).getSeats());
         }
         return;
     }
@@ -280,6 +282,7 @@ public class User {
         charge += sc.nextInt();
         System.out.println("\033[38;2;0;255;0mSuccesfully\nYour charge is:" + charge);
         System.out.println("\033[0m");
+        sc.nextLine();
     }
     public void showFlight(int i){
         System.out.println("\033[38;2;255;255;255m.........................................................................................................\033[0m");
