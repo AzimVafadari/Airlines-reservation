@@ -3,8 +3,7 @@ import java.util.Scanner;
 
 public class Admin {
     public Scanner sc = new Scanner(System.in);
-    public int command;
-    public int cnt_flight = 6;
+    private int command;
     private String username = "Admin";
     private String password = "Admin";
     private ArrayList<Flight> flights = new ArrayList<Flight>();
@@ -13,17 +12,17 @@ public class Admin {
         this.username = username;
         this.password = password;
         this.flights = flights;
-        flight = new Flight("WX-12", "Yazd", "Tehran", "1401-12-10", "12:30", 700000, 51);
+        flight = new Flight("YT-12", "Yazd", "Tehran", "1402-02-25", "12:30", 700000, 82);
         this.flights.add(flight);
-        flight = new Flight("WX-13", "Mashhad", "Ahvaz", "1401-12-11", "08:00", 900000, 245);
+        flight = new Flight("MA-13", "Mashhad", "Ahvaz", "1402-03-11", "08:00", 900000, 246);
         this.flights.add(flight);
-        flight = new Flight("WX-15", "Ardebil", "Tehran", "1401-12-11", "09:00", 900000, 24);
+        flight = new Flight("AT-15", "Ardebil", "Tehran", "1402-02-10", "09:45", 900000, 24);
         this.flights.add(flight);
-        flight = new Flight("BG-22", "Shiraz", "Tabriz", "1401-12-12", "22:00", 800000, 174);
+        flight = new Flight("BG-22", "Shiraz", "Tabriz", "1402-02-18", "22:00", 800000, 174);
         this.flights.add(flight);
-        flight = new Flight("YE-82", "Yazd", "Esfahan", "1401-11-12", "22:30", 150000, 17);
+        flight = new Flight("YE-82", "Yazd", "Esfahan", "1402-02-12", "22:30", 150000, 178);
         this.flights.add(flight);
-        flight = new Flight("TK-47", "Tehran", "Kerman", "1401-10-18", "22:30", 2000000, 188);
+        flight = new Flight("TK-47", "Tehran", "Kerman", "1402-02-18", "22:30", 2000000, 148);
         this.flights.add(flight);
     }
 
@@ -51,7 +50,6 @@ public class Admin {
         this.password = password;
     }
     public void add(){
-        cnt_flight++;
         System.out.print("\033[38;2;255;255;200mFlight id\033[38;2;255;255;0m:\033[38;2;255;255;200m ");
         flight.setFlightId(sc.next());
         System.out.print("Origin\033[38;2;255;255;0m:\033[38;2;255;255;200m ");
@@ -78,8 +76,8 @@ public class Admin {
         System.out.println("\033[38;2;255;255;200mEnter the flight id\033[38;2;255;255;0m:\033[38;2;255;255;200m    ");
         String id = sc.next();
         int i;
-        for (i = 0; i < cnt_flight; i++) {
-            if(id == flights.get(i).getFlightId())
+        for (i = 0; i < flights.size(); i++) {
+            if(id.equals(flights.get(i).getFlightId()))
                 break;
         }
         i--;
@@ -149,8 +147,8 @@ public class Admin {
     public void remove(){
         System.out.println("\033[38;2;255;255;200mFlight id\033[38;2;255;255;0m: \033[0m");
         String target = sc.next();
-        for (int i = 0; i < cnt_flight; i++) {
-            if(flights.get(i).getFlightId() == target) {
+        for (int i = 0; i < flights.size(); i++) {
+            if(flights.get(i).getFlightId().equals(target)) {
                 for (int j = 0; j < flights.get(i).tickets.size(); j++) {
                     flights.get(i).tickets.get(j).getUser().ticketCancellation(flights.get(i).tickets.get(j).getTicketId());
                 }
@@ -158,7 +156,6 @@ public class Admin {
                 break;
             }
         }
-        cnt_flight--;
         return;
     }
     public void flightSchedule(){
@@ -167,7 +164,7 @@ public class Admin {
                 "Destination\t\033[38;2;255;255;0m|\033[38;2;255;255;200mDate\t\t" +
                 "\033[38;2;255;255;0m|\033[38;2;255;255;200mTime\t\t\033[38;2;255;255;0m|\033[38;2;255;255;200mPrice\t\t\033[38;2;255;255;0m|\033[38;2;255;255;200m" +
                 "Seats\t\033[38;2;255;255;0m|\033[0m");
-        for (int i = 0; i < cnt_flight; i++) {
+        for (int i = 0; i < flights.size(); i++) {
             System.out.println("\033[38;2;255;255;255m.........................................................................................................\033[0m");
             System.out.printf("\033[38;2;255;255;0m|\033[38;2;255;255;200m%1$-15s" +
                             "\033[38;2;255;255;0m|\033[38;2;255;255;200m%2$-15s" +

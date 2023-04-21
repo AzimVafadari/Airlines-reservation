@@ -10,14 +10,6 @@ public class Flight {
     private int cntTickets = 0;
     public ArrayList<Ticket> tickets = new ArrayList<Ticket>();
 
-    public int getCntTickets() {
-        return cntTickets;
-    }
-
-    public void setCntTickets(int cntTickets) {
-        this.cntTickets = cntTickets;
-    }
-
     public Flight(String flightId, String origin, String destination, String date, String time, int price, int seats) {
         this.flightId = flightId;
         this.origin = origin;

@@ -240,10 +240,12 @@ public class User {
                 if(flights.get(i).getPrice() > charge){
                     System.out.println("\033[38;2;255;0;0mYour charge isn't enough go back and add charge \033[38;2;0;255;0m:)\033[0m");
                     sc.nextLine();
+                    sc.nextLine();
                     return;
                 }
                 if(flights.get(i).getSeats() <= 0){
                     System.out.println("\033[38;2;255;0;0mYour flight is full!\033[38;2;0;255;0m:)\033[0m");
+                    sc.nextLine();
                     sc.nextLine();
                     return;
                 }
@@ -258,9 +260,10 @@ public class User {
                 flights.get(i).setSeats(flights.get(i).getSeats() - 1);
                 bookedTicket.add(flightId);
                 charge -= flights.get(i).getPrice();
-                flights.get(i).setCntTickets(flights.get(i).getCntTickets() + 1);
                 Ticket ticket = new Ticket(this, flights.get(i), flightId);
                 flights.get(i).tickets.add(ticket);
+                System.out.print("\033[38;2;255;255;200mYour ticket id is\033[38;2;255;255;0m: ");
+                System.out.println(flights.get(i).tickets.get(0).getTicketId());
                 sc.nextLine();
                 sc.nextLine();
                 return;
@@ -295,7 +298,7 @@ public class User {
             System.out.println("\033[38;2;255;255;200mYour booked tickets is empty!");
 
         for (int i = 0; i < bookedTicket.size(); i++) {
-            System.out.println("\033[38;2;0;0;220m" + bookedTicket.get(i));
+            System.out.println("\033[38;2;255;255;0m" + bookedTicket.get(i));
         }
         sc.nextLine();
     }
