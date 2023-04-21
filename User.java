@@ -285,8 +285,8 @@ public class User {
     // booked ticket is based on flight id + @ + number of tickets for the flight
     public void bookedTickets(){
         if(bookedTicket.size()==0)
-            System.out.println();
-        System.out.println("\033[38;2;255;255;200mYour booked tickets is empty!");
+            System.out.println("\033[38;2;255;255;200mYour booked tickets is empty!");
+
         for (int i = 0; i < bookedTicket.size(); i++) {
             System.out.println("\033[38;2;0;0;220m" + bookedTicket.get(i));
         }
