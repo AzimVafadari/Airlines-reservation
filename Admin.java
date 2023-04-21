@@ -150,8 +150,12 @@ public class Admin {
         System.out.println("\033[38;2;255;255;200mFlight id\033[38;2;255;255;0m: \033[0m");
         String target = sc.next();
         for (int i = 0; i < cnt_flight; i++) {
-            if(flights.get(i).getFlightId() == target)
+            if(flights.get(i).getFlightId() == target) {
+                for (int j = 0; j < flights.get(i).tickets.size(); j++) {
+                    flights.get(i).tickets.get(j).getUser().ticketCancellation(flights.get(i).tickets.get(j).getTicketId());
+                }
                 flights.remove(i);
+            }
         }
         cnt_flight--;
         return;

@@ -4,6 +4,15 @@ import java.util.Scanner;
 
 public class User {
     private String username;
+
+    public int getCharge() {
+        return charge;
+    }
+
+    public void setCharge(int charge) {
+        this.charge = charge;
+    }
+
     private String password;
     private ArrayList<Flight> flights = new ArrayList<Flight>();
     private ArrayList<Flight> filteredFlights = new ArrayList<Flight>();
@@ -244,14 +253,14 @@ public class User {
                 flights.get(i).setSeats(flights.get(i).getSeats() - 1);
                 bookedTicket.add(flightId);
                 charge -= flights.get(i).getPrice();
-                flights.get(i).setCntTickets(flights.get(i).getCntTickets() - 1);
+                flights.get(i).setCntTickets(flights.get(i).getCntTickets() + 1);
+                Ticket ticket = new Ticket(this, flights.get(i), flightId);
+                flights.get(i).tickets.add(ticket);
                 return;
             }
         }
     }
-    public void ticketCancellation(){
-        System.out.println("\033[38;2;130;255;130mEnter your ticket id: \033[0m");
-        String ticketId = sc.next();
+    public void ticketCancellation(String ticketId){
         String tmp = new String();
         int i = 0;
         while(ticketId.charAt(i) != '@'){
@@ -263,9 +272,15 @@ public class User {
             if(flights.get(j).getFlightId().equals(tmp)){
                 charge += flights.get(j).getPrice();
                 flights.get(j).setSeats(flights.get(j).getSeats() + 1);
+                for (int k = 0; k < flights.get(j).tickets.size(); k++) {
+                    if(flights.get(j).tickets.get(k).getTicketId().equals(ticketId)){
+                        flights.get(j).tickets.remove(k);
+                    }
+                }
                 break;
             }
         }
+        return;
     }
     // booked ticket is based on flight id + @ + number of tickets for the flight
     public void bookedTickets(){

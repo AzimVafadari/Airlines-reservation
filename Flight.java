@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Flight {
     private String flightId;
     private String origin;
@@ -6,6 +8,7 @@ public class Flight {
     private String time;
     // The number of tickets that is reserved or cancelled by this flight
     private int cntTickets = 0;
+    public ArrayList<Ticket> tickets = new ArrayList<Ticket>();
 
     public int getCntTickets() {
         return cntTickets;

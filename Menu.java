@@ -132,7 +132,9 @@ public class Menu {
                 users.get(userNumber).bookingTicket();
                 break;
             case 4:
-                users.get(userNumber).ticketCancellation();
+                System.out.println("\033[38;2;130;255;130mEnter your ticket id: \033[0m");
+                String ticketId = sc.next();
+                users.get(userNumber).ticketCancellation(ticketId);
                 break;
             case 5:
                 users.get(userNumber).bookedTickets();
