@@ -237,25 +237,32 @@ public class User {
         flightId = sc.next();
         for (int i = 0; i < flights.size(); i++) {
             if(flightId.equals(flights.get(i).getFlightId())){
+                if(flights.get(i).getPrice() > charge){
+                    System.out.println("\033[38;2;255;0;0mYour charge isn't enough go back and add charge \033[38;2;0;255;0m:)\033[0m");
+                    sc.nextLine();
+                    return;
+                }
+                if(flights.get(i).getSeats() <= 0){
+                    System.out.println("\033[38;2;255;0;0mYour flight is full!\033[38;2;0;255;0m:)\033[0m");
+                    sc.nextLine();
+                    return;
+                }
                 System.out.println("\033[38;2;255;255;0m|\033[38;2;255;255;200mFlightId\t\033[38;2;255;255;0m|\033[38;2;255;255;200m" +
                         "Origin\t\t\033[38;2;255;255;0m|\033[38;2;255;255;200m" +
                         "Destination\t\033[38;2;255;255;0m|\033[38;2;255;255;200mDate\t\t" +
                         "\033[38;2;255;255;0m|\033[38;2;255;255;200mTime\t\t\033[38;2;255;255;0m|\033[38;2;255;255;200mPrice\t\t\033[38;2;255;255;0m|\033[38;2;255;255;200m" +
                         "Seats\t\033[38;2;255;255;0m|\033[0m");
                 showFlight(i);
-                if(flights.get(i).getPrice() > charge){
-                    System.out.println("\033[38;2;255;0;0mYour charge isn't enough go back and add charge \033[38;2;0;255;0m:)\033[0m");
-                    sc.nextLine();
-                    return;
-                }
                 flightId += "@";
-                flightId += Integer.toString(flights.get(i).getCntTickets());
+                flightId += username;
                 flights.get(i).setSeats(flights.get(i).getSeats() - 1);
                 bookedTicket.add(flightId);
                 charge -= flights.get(i).getPrice();
                 flights.get(i).setCntTickets(flights.get(i).getCntTickets() + 1);
                 Ticket ticket = new Ticket(this, flights.get(i), flightId);
                 flights.get(i).tickets.add(ticket);
+                sc.nextLine();
+                sc.nextLine();
                 return;
             }
         }

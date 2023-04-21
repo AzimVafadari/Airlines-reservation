@@ -155,6 +155,7 @@ public class Admin {
                     flights.get(i).tickets.get(j).getUser().ticketCancellation(flights.get(i).tickets.get(j).getTicketId());
                 }
                 flights.remove(i);
+                break;
             }
         }
         cnt_flight--;
