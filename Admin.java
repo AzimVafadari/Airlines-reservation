@@ -1,38 +1,14 @@
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Admin {
-    public Scanner sc = new Scanner(System.in);
+    private Scanner sc = new Scanner(System.in);
     private int command;
-    private String username = "Admin";
-    private String password = "Admin";
-    private ArrayList<Flight> flights = new ArrayList<Flight>();
+    private String username;
+    private String password;
+
     private Flight flight;
-    public Admin(String username, String password, ArrayList<Flight> flights) {
-        this.username = username;
-        this.password = password;
-        this.flights = flights;
-        flight = new Flight("YT-12", "Yazd", "Tehran", "1402-02-25", "12:30", 700000, 82);
-        this.flights.add(flight);
-        flight = new Flight("MA-13", "Mashhad", "Ahvaz", "1402-03-11", "08:00", 900000, 246);
-        this.flights.add(flight);
-        flight = new Flight("AT-15", "Ardebil", "Tehran", "1402-02-10", "09:45", 900000, 24);
-        this.flights.add(flight);
-        flight = new Flight("BG-22", "Shiraz", "Tabriz", "1402-02-18", "22:00", 800000, 174);
-        this.flights.add(flight);
-        flight = new Flight("YE-82", "Yazd", "Esfahan", "1402-02-12", "22:30", 150000, 178);
-        this.flights.add(flight);
-        flight = new Flight("TK-47", "Tehran", "Kerman", "1402-02-18", "22:30", 2000000, 148);
-        this.flights.add(flight);
-    }
-
-    public ArrayList<Flight> getFlights() {
-        return flights;
-    }
-
-    public void setFlights(ArrayList<Flight> flights) {
-        this.flights = flights;
-    }
 
     public String getUsername() {
         return username;
@@ -49,7 +25,7 @@ public class Admin {
     public void setPassword(String password) {
         this.password = password;
     }
-    public void add(){
+    public void add() throws IOException {
         System.out.print("\033[38;2;255;255;200mFlight id\033[38;2;255;255;0m:\033[38;2;255;255;200m ");
         flight.setFlightId(sc.next());
         System.out.print("Origin\033[38;2;255;255;0m:\033[38;2;255;255;200m ");
@@ -69,18 +45,28 @@ public class Admin {
             flight.setSeats(sc.nextInt());
         }while(flight.getSeats() < 0);
         System.out.println("\033[38;2;255;255;200m\033[0m");
-        flights.add(flight);
+        try {
+            Data.write_flight(flight);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         return;
     }
-    public void update() {
+    public void update() throws IOException {
         System.out.println("\033[38;2;255;255;200mEnter the flight id\033[38;2;255;255;0m:\033[38;2;255;255;200m    ");
-        String id = sc.next();
-        int i;
-        for (i = 0; i < flights.size(); i++) {
-            if(id.equals(flights.get(i).getFlightId()))
+        String flightId = sc.next();
+        int i = 0;
+        String find = "";
+        System.out.println(Data.flights.length());
+        for (i = 0; i < Data.flights.length()/158; i++) {
+            Data.flights.seek(i*158);
+            find = Data.readFixStringFlights();
+            if(flightId.equals(find)){
                 break;
+            }
+
         }
-        i--;
+        Data.flights.seek(i*158);
         System.out.println("\033[38;2;255;255;200m<\033[38;2;255;255;0m1\033[38;2;255;255;200m> Flight id\n" +
                 "\033[38;2;255;255;200m<\033[38;2;255;255;0m2\033[38;2;255;255;200m> Origin\n" +
                 "\033[38;2;255;255;200m<\033[38;2;255;255;0m3\033[38;2;255;255;200m> Destination\n" +
@@ -95,35 +81,50 @@ public class Admin {
             switch(command){
                 case 1:
                     System.out.print("\033[38;2;255;255;200mFlight id\033[38;2;255;255;0m:\033[38;2;255;255;200m ");
-                    flights.get(i).setFlightId(sc.next());
+                    String newFlightId = Data.fix_length(sc.next());
+                    Data.flights.writeChars(newFlightId);
                     break;
                 case 2:
                     System.out.print("\nOrigin\033[38;2;255;255;0m:\033[38;2;255;255;200m ");
-                    flights.get(i).setOrigin(sc.next());
+                    String newOrigin = Data.fix_length(sc.next());
+                    Data.flights.seek(i*158 + 30);
+                    Data.flights.writeChars(newOrigin);
                     break;
                 case 3:
                     System.out.print("\nDestination\033[38;2;255;255;0m:\033[38;2;255;255;200m ");
-                    flights.get(i).setDestination(sc.next());
+                    String newDestination = Data.fix_length(sc.next());
+                    Data.flights.seek(i*158 + 60);
+                    Data.flights.writeChars(newDestination);
                     break;
                 case 4:
                     System.out.print("\nDate\033[38;2;255;255;0m:\033[38;2;255;255;200m ");
-                    flights.get(i).setDate(sc.next());
+                    String newDate = Data.fix_length(sc.next());
+                    Data.flights.seek(i*158 + 90);
+                    Data.flights.writeChars(newDate);
                     break;
                 case 5:
                     System.out.print("\nTime\033[38;2;255;255;0m:\033[38;2;255;255;200m ");
-                    flights.get(i).setTime(sc.next());
+                    String newTime = Data.fix_length(sc.next());
+                    Data.flights.seek(i*158 + 120);
+                    Data.flights.writeChars(newTime);
                     break;
                 case 6:
+                    int newPrice;
                     do {
                         System.out.print("\nPrice\033[38;2;255;255;0m:\033[38;2;255;255;200m ");
-                        flights.get(i).setPrice(sc.nextInt());
-                    }while(flight.getPrice() < 0);
+                        newPrice = sc.nextInt();
+                    }while(newPrice < 0);
+                    Data.flights.seek(i*158 + 150);
+                    Data.flights.writeInt(newPrice);
                     break;
                 case 7:
+                    int newSeats;
                     do {
                         System.out.print("\nSeats\033[38;2;255;255;0m:\033[38;2;255;255;200m ");
-                        flights.get(i).setSeats(sc.nextInt());
-                    }while(flight.getSeats() < 0);
+                        newSeats = sc.nextInt();
+                    }while(newSeats < 0);
+                    Data.flights.seek(i*158 + 154);
+                    Data.flights.writeInt(newSeats);
                     break;
             }
             deleteScreen();
@@ -144,27 +145,74 @@ public class Admin {
         System.out.print("\033[H\033[2J");
         System.out.flush();
     }
-    public void remove(){
+    public void remove() throws IOException {
         System.out.println("\033[38;2;255;255;200mFlight id\033[38;2;255;255;0m: \033[0m");
-        String target = sc.next();
-        for (int i = 0; i < flights.size(); i++) {
-            if(flights.get(i).getFlightId().equals(target)) {
-                for (int j = 0; j < flights.get(i).tickets.size(); j++) {
-                    flights.get(i).tickets.get(j).getUser().ticketCancellation(flights.get(i).tickets.get(j).getTicketId());
-                }
-                flights.remove(i);
+        String flightId = sc.next();
+        int i = 0;
+        String find = "";
+        System.out.println(Data.flights.length());
+        for (i = 0; i < Data.flights.length()/158; i++) {
+            Data.flights.seek(i*158);
+            find = Data.readFixStringFlights();
+            if(flightId.equals(find)){
                 break;
             }
         }
+        int k = i;
+        for (int j = 0; j < Data.flights.length()/158 - k - 1; j++) {
+            int nowSeek = i*158;
+            //replace the flight id
+            int nextSeek = nowSeek + 158;
+            if(nextSeek > Data.flights.length())
+                break;
+            Data.flights.seek(nextSeek);
+            String tmp = Data.readFixStringFlights();
+            Data.flights.seek(nowSeek);
+            Data.flights.writeChars(tmp);
+            //replace the origin
+            Data.flights.seek(nextSeek + 30);
+            tmp = Data.readFixStringFlights();
+            Data.flights.seek(nowSeek + 30);
+            Data.flights.writeChars(tmp);
+            //replace the Destination
+            Data.flights.seek(nextSeek + 60);
+            tmp = Data.readFixStringFlights();
+            Data.flights.seek(nowSeek + 60);
+            Data.flights.writeChars(tmp);
+            //replace the Date
+            Data.flights.seek(nextSeek + 90);
+            tmp = Data.readFixStringFlights();
+            Data.flights.seek(nowSeek + 90);
+            Data.flights.writeChars(tmp);
+            //replace the Time
+            Data.flights.seek(nextSeek + 120);
+            tmp = Data.readFixStringFlights();
+            Data.flights.seek(nowSeek + 120);
+            Data.flights.writeChars(tmp);
+            //replace the Price
+            Data.flights.seek(nextSeek + 150);
+            int tmpInt = Data.flights.readInt();
+            Data.flights.seek(nowSeek + 150);
+            Data.flights.writeInt(tmpInt);
+            //replace the Seats
+            Data.flights.seek(nextSeek + 154);
+            int Seats = Data.flights.readInt();
+            Data.flights.seek(nowSeek + 154);
+            Data.flights.writeInt(Seats);
+            i++;
+        }
+        Data.flights.setLength(Data.flights.length() - 158);
         return;
     }
-    public void flightSchedule(){
+    public void flightSchedule() throws IOException {
         System.out.println("\033[38;2;255;255;0m|\033[38;2;255;255;200mFlightId\t\033[38;2;255;255;0m|\033[38;2;255;255;200m" +
                 "Origin\t\t\033[38;2;255;255;0m|\033[38;2;255;255;200m" +
                 "Destination\t\033[38;2;255;255;0m|\033[38;2;255;255;200mDate\t\t" +
                 "\033[38;2;255;255;0m|\033[38;2;255;255;200mTime\t\t\033[38;2;255;255;0m|\033[38;2;255;255;200mPrice\t\t\033[38;2;255;255;0m|\033[38;2;255;255;200m" +
                 "Seats\t\033[38;2;255;255;0m|\033[0m");
-        for (int i = 0; i < flights.size(); i++) {
+        for (int i = 0; i < Data.flights.length()/158; i++) {
+            int nowSeek = i*158;
+            Data.flights.seek(nowSeek);
             System.out.println("\033[38;2;255;255;255m.........................................................................................................\033[0m");
             System.out.printf("\033[38;2;255;255;0m|\033[38;2;255;255;200m%1$-15s" +
                             "\033[38;2;255;255;0m|\033[38;2;255;255;200m%2$-15s" +
@@ -173,12 +221,13 @@ public class Admin {
                             "\033[38;2;255;255;0m|\033[38;2;255;255;200m%5$-15s" +
                             "\033[38;2;255;255;0m|\033[38;2;255;255;200m%6$-,15d" +
                             "\033[38;2;255;255;0m|\033[38;2;255;255;200m%7$-7d" +
-                            "\033[38;2;255;255;0m|%n\033[0m", flights.get(i).getFlightId(),
-                    flights.get(i).getOrigin(), flights.get(i).getDestination(), flights.get(i).getDate(),
-                    flights.get(i).getTime(), flights.get(i).getPrice(), flights.get(i).getSeats());
+                            "\033[38;2;255;255;0m|%n\033[0m", Data.readFixStringFlights(),
+                    Data.readFixStringFlights(), Data.readFixStringFlights(), Data.readFixStringFlights(),
+                    Data.readFixStringFlights(), Data.flights.readInt(), Data.flights.readInt());
 
         }
         sc.nextLine();
         return;
     }
 }
+

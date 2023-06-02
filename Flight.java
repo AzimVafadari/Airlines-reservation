@@ -1,3 +1,5 @@
+import java.io.FileNotFoundException;
+import java.io.RandomAccessFile;
 import java.util.ArrayList;
 
 public class Flight {
@@ -22,6 +24,7 @@ public class Flight {
 
     private int price;
     private int seats;
+
     public String getFlightId() {
         return flightId;
     }
