@@ -8,7 +8,7 @@ public class Admin {
     private String username;
     private String password;
 
-    private Flight flight;
+    private Flight flight = new Flight("YT-22", "Yazd", "Tehran", "1402/02/30", "14:55", 190000, 28);
 
     public String getUsername() {
         return username;

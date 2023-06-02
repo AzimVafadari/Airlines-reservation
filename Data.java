@@ -99,4 +99,12 @@ public class Data {
         }
         return tmp.trim();
     }
+
+    public static String readFixStringTickets() throws IOException {
+        String tmp = "";
+        for (int i = 0; i < FIX_SIZE; i++) {
+            tmp += tickets.readChar();
+        }
+        return tmp.trim();
+    }
 }

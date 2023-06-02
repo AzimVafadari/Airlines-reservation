@@ -9,7 +9,7 @@ public class Menu {
         menuOptions();
     }
     public int command;
-    private User user;
+    private User user = new User(0);
     private Admin admin = new Admin();
     public Scanner sc = new Scanner(System.in);
 

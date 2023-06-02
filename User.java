@@ -284,9 +284,8 @@ public class User {
                 Data.tickets.seek(Data.tickets.getFilePointer());
                 Data.tickets.writeChars(ticketId);
                 charge -= flight.getPrice();
-                Data.passengers.seek();
+                Data.passengers.seek(cursor + 60);
                 Data.passengers.writeInt(charge);
-                Data.passengers.seek(Data.passengers.getFilePointer() - 4);
                 System.out.print("\033[38;2;255;255;200mYour ticket id is\033[38;2;255;255;0m: " + ticketId);
                 sc.nextLine();
                 sc.nextLine();
@@ -295,18 +294,38 @@ public class User {
             seekNow += 128;
         }
     }
-    public void ticketCancellation(String ticketId){
-        String flightId = ticketId.substring(0, 15).trim();
-        bookedTicket.remove(ticketId);
-        for (int j = 0; j < flights.size(); j++) {
-            if(flights.get(j).getFlightId().equals(tmp)){
-                charge += flights.get(j).getPrice();
-                flights.get(j).setSeats(flights.get(j).getSeats() + 1);
-                for (int k = 0; k < flights.get(j).tickets.size(); k++) {
-                    if(flights.get(j).tickets.get(k).getTicketId().equals(ticketId)){
-                        flights.get(j).tickets.remove(k);
-                    }
+    public void ticketCancellation(String ticketId) throws IOException {
+        String flightId = ticketId.substring(16).trim();
+        Data.tickets.seek(0);
+        int nowSeek = 0;
+        int nextSeek;
+        for (int i = 0; i < Data.tickets.length()/62; i++) {
+            if(ticketId.equals(Data.readFixStringTickets())){
+                int k = i;
+                for (int j = 0; j < Data.tickets.length()/62 - k - 1; j++) {
+                    nowSeek = i*62;
+                    nextSeek = nowSeek + 62;
+                    if(nextSeek > Data.tickets.length())
+                        break;
+                    Data.tickets.seek(nextSeek);
+                    String tmp = Data.readFixStringFlights();
+                    Data.tickets.seek(nowSeek);
+                    Data.tickets.writeChars(tmp);
+                    i++;
                 }
+                break;
+            }
+        }
+        Data.tickets.setLength(Data.tickets.length() - 62);
+        for (int i = 0; i < Data.flights.length()/158; i++) {
+            Data.flights.seek(i*158);
+            if (flightId.equals(Data.readFixStringFlights())){
+                Data.flights.seek(i*158 + 150);
+                int seats = Data.flights.readInt();
+                Data.flights.seek(i*158 + 150);
+                Data.flights.writeInt(seats);
+                Data.flights.seek(i*158 + 154);
+                charge += Data.flights.readInt();
                 break;
             }
         }
@@ -314,19 +333,36 @@ public class User {
     }
     // booked ticket is based on flight id + @ + number of tickets for the flight
     public void bookedTickets(){
-        if(bookedTicket.size()==0)
-            System.out.println("\033[38;2;255;255;200mYour booked tickets is empty!");
+        int cnt = 0;
 
-        for (int i = 0; i < bookedTicket.size(); i++) {
-            System.out.println("\033[38;2;255;255;0m" + bookedTicket.get(i));
+        try {
+            Data.tickets.seek(0);
+            for (int i = 0; i < Data.tickets.length()/62; i++) {
+                String bookedTicket = Data.readFixStringTickets().substring(0, 15).trim();
+                if(username.equals(bookedTicket)) {
+                    System.out.println("\033[38;2;255;255;0m" + bookedTicket);
+                    cnt++;
+                }
+
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
+
+        if(cnt==0)
+            System.out.println("\033[38;2;255;255;200mYour booked tickets is empty!");
         sc.nextLine();
     }
     public void addCharge(){
         System.out.println("\033[38;2;0;255;0mYour charge is: " + charge + "\nEnter the charge you want to add: \033[38;2;255;255;0m");
         charge += sc.nextInt();
-        System.out.println("\033[38;2;0;255;0mSuccesfully\nYour charge is:" + charge);
         System.out.println("\033[0m");
+        try {
+            Data.passengers.seek(cursor + 60);
+            Data.passengers.writeInt(charge);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         sc.nextLine();
     }
     public void showFlight(Flight flight){
